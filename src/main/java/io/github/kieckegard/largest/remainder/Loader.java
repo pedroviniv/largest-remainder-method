@@ -10,6 +10,7 @@ import java.util.Arrays;
 public class Loader {
     
     public static void main(String[] args) {
+    
         
         new LargestRemainder()
                 .distributeRemainder(
@@ -26,5 +27,7 @@ public class Loader {
                 3
         )
         .forEach(System.out::println);
+        
+        
     }
 }

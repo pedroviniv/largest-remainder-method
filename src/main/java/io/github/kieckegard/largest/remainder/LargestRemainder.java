@@ -65,6 +65,42 @@ public class LargestRemainder {
                     .build();
         };
     }
+    
+    /**
+     * Apenas um atalho para {@link LargestRemainder#distributeRemainder(java.util.List, java.math.BigDecimal, java.lang.Integer) }
+     * que recebe, ao inves de instancias de {@link BigDecimal}, instancias de Double e Integer.
+     * 
+     * @param percentages
+     * @param total
+     * @param decimalPlaces
+     * @return 
+     */
+    public List<BigDecimal> distributeRemainder(List<Double> percentages, final Integer total, final Integer decimalPlaces) {
+        
+        final List<BigDecimal> bigPercentages = percentages.stream()
+                .map(BigDecimal::valueOf)
+                .collect(Collectors.toList());
+        
+        return this.distributeRemainder(bigPercentages, BigDecimal.valueOf(total), decimalPlaces);
+    }
+    
+    /**
+     * Apenas um atalho para {@link LargestRemainder#distributeRemainder(java.util.List, java.math.BigDecimal, java.lang.Integer) }
+     * que recebe, ao inves de instancias de {@link BigDecimal}, instancias de Double.
+     * 
+     * @param percentages
+     * @param total
+     * @param decimalPlaces
+     * @return 
+     */
+    public List<BigDecimal> distributeRemainder(List<Double> percentages, final Double total, final Integer decimalPlaces) {
+        
+        final List<BigDecimal> bigPercentages = percentages.stream()
+                .map(BigDecimal::valueOf)
+                .collect(Collectors.toList());
+        
+        return this.distributeRemainder(bigPercentages, BigDecimal.valueOf(total), decimalPlaces);
+    }
 
     /**
      * Arredonda todos as porcentagens passadas de maneira que a soma delas
