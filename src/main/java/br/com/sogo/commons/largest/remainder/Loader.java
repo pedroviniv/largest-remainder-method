@@ -1,4 +1,4 @@
-package io.github.kieckegard.largest.remainder;
+package br.com.sogo.commons.largest.remainder;
 
 import java.math.BigDecimal;
 import java.util.Arrays;

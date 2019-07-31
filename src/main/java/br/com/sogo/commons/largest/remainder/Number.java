@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.github.kieckegard.largest.remainder;
+package br.com.sogo.commons.largest.remainder;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
@@ -43,7 +43,7 @@ public class Number {
         }
 
         public Number build() {
-            return new io.github.kieckegard.largest.remainder.Number(originalOrder, value, weight);
+            return new br.com.sogo.commons.largest.remainder.Number(originalOrder, value, weight);
         }
     }
 
