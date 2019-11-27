@@ -18,14 +18,17 @@ public class Number {
     private final Integer originalOrder;
     private BigDecimal value;
     private final BigDecimal weight;
+    private final Boolean fixed;
 
     public static class Builder {
 
         private Integer originalOrder;
         private BigDecimal value;
         private BigDecimal weight;
+        private Boolean fixed;
 
         private Builder() {
+            this.fixed = false;
         }
 
         public Builder originalOrder(final Integer value) {
@@ -42,9 +45,14 @@ public class Number {
             this.weight = value;
             return this;
         }
+        
+        public Builder isFixed(final Boolean isFixed) {
+            this.fixed = isFixed;
+            return this;
+        }
 
         public Number build() {
-            return new br.com.sogo.commons.largest.remainder.Number(originalOrder, value, weight);
+            return new br.com.sogo.commons.largest.remainder.Number(originalOrder, value, weight, fixed);
         }
     }
 
@@ -52,10 +60,11 @@ public class Number {
         return new Number.Builder();
     }
 
-    private Number(final Integer originalOrder, final BigDecimal value, final BigDecimal weight) {
+    private Number(final Integer originalOrder, final BigDecimal value, final BigDecimal weight, final Boolean isFixed) {
         this.originalOrder = originalOrder;
         this.value = value;
         this.weight = weight;
+        this.fixed = isFixed;
     }
 
     public Integer getOriginalOrder() {
@@ -68,6 +77,10 @@ public class Number {
 
     public BigDecimal getWeight() {
         return weight;
+    }
+
+    public Boolean isFixed() {
+        return fixed;
     }
 
     /**
@@ -116,6 +129,6 @@ public class Number {
 
     @Override
     public String toString() {
-        return "Number{" + "originalOrder=" + originalOrder + ", value=" + value + ", weight=" + weight + '}';
+        return "Number{" + "originalOrder=" + originalOrder + ", value=" + value + ", weight=" + weight + ", isFixed=" + fixed + '}';
     }
 }

@@ -51,9 +51,9 @@ public class LargestRemainder {
      * @param decimalPlaces numero de casas decimais a ser utilizada para extrair
      * o valor sem a parte fracional e a parte fracional.
      * 
-     * @return 
+     * @return
      */
-    private IntFunction<Number> toNumberItem(final List<BigDecimal> percentagens, final Integer decimalPlaces) {
+    private IntFunction<Number> toNumberItem(final List<BigDecimal> percentagens, final Integer decimalPlaces, final List<Integer> fixedNumbers) {
 
         return (index) -> {
             BigDecimal current = percentagens.get(index);
@@ -62,6 +62,7 @@ public class LargestRemainder {
                     .originalOrder(index)
                     .value(current.setScale(decimalPlaces, RoundingMode.FLOOR))
                     .weight(getRemainder(current, decimalPlaces))
+                    .isFixed(fixedNumbers.contains(index))
                     .build();
         };
     }
@@ -75,13 +76,13 @@ public class LargestRemainder {
      * @param decimalPlaces
      * @return 
      */
-    public List<BigDecimal> distributeRemainder(List<Double> percentages, final Integer total, final Integer decimalPlaces) throws IllegalArgumentException {
+    public List<BigDecimal> distributeRemainder(List<Double> percentages, final Integer total, final Integer decimalPlaces, final List<Integer> fixedNumbers) throws IllegalArgumentException {
         
         final List<BigDecimal> bigPercentages = percentages.stream()
                 .map(BigDecimal::valueOf)
                 .collect(Collectors.toList());
         
-        return this.distributeRemainder(bigPercentages, BigDecimal.valueOf(total), decimalPlaces);
+        return this.distributeRemainder(bigPercentages, BigDecimal.valueOf(total), decimalPlaces, fixedNumbers);
     }
     
     /**
@@ -93,13 +94,13 @@ public class LargestRemainder {
      * @param decimalPlaces
      * @return 
      */
-    public List<BigDecimal> distributeRemainder(List<Double> percentages, final Double total, final Integer decimalPlaces) throws IllegalArgumentException {
+    public List<BigDecimal> distributeRemainder(List<Double> percentages, final Double total, final Integer decimalPlaces, final List<Integer> fixedNumbers) throws IllegalArgumentException {
         
         final List<BigDecimal> bigPercentages = percentages.stream()
                 .map(BigDecimal::valueOf)
                 .collect(Collectors.toList());
         
-        return this.distributeRemainder(bigPercentages, BigDecimal.valueOf(total), decimalPlaces);
+        return this.distributeRemainder(bigPercentages, BigDecimal.valueOf(total), decimalPlaces, fixedNumbers);
     }
 
     /**
@@ -115,7 +116,7 @@ public class LargestRemainder {
      * @param decimalPlaces
      * @return
      */
-    public List<BigDecimal> distributeRemainder(List<BigDecimal> percentages, final BigDecimal total, final Integer decimalPlaces) throws IllegalArgumentException {
+    public List<BigDecimal> distributeRemainder(List<BigDecimal> percentages, final BigDecimal total, final Integer decimalPlaces, final List<Integer> fixedNumbers) throws IllegalArgumentException {
         
         if (decimalPlaces == null || decimalPlaces < 0) {
             throw new IllegalArgumentException("A casa decimal informada \"decimalPlaces\" nao deve ser nula e deve ser maior > -1. valor passado: " + decimalPlaces);
@@ -157,7 +158,7 @@ public class LargestRemainder {
          * informado duas casas decimais, a parte fracional (weight) sera 0.0099
          */
         final List<Number> numbers = IntStream.range(0, percentageListSize)
-                .mapToObj(toNumberItem(percentages, decimalPlaces))
+                .mapToObj(toNumberItem(percentages, decimalPlaces, fixedNumbers))
                 .sorted(Number.getComparatorByWeight(desc))
                 .collect(Collectors.toList());
 
@@ -171,20 +172,31 @@ public class LargestRemainder {
          * Calculando numero de incrementos/decrementos necessarios para que a
          * soma dos valores resultem no total desejado.
          */
-        final Integer iterationTimes = total.subtract(sum).abs()
+        Integer iterationTimes = total.subtract(sum).abs()
                 .multiply(BigDecimal.valueOf(Math.pow(10, decimalPlaces)))
                 .intValue();
-
+        
         /**
          * Iterando o numero calculado acima, alterando os valores numericos de
          * maneira que no final da iteraçao tenhamos certeza de que a soma de
          * todos os valores resultem no total desejado.
          */
-        IntStream.range(0, iterationTimes)
-                .forEach(index -> {
-                    final Integer nextElemIndex = index % percentageListSize;
-                    numbers.get(nextElemIndex).add(incrementor);
-                });
+        while(iterationTimes > 0) {
+            
+            for(Number currentNumber : numbers) {
+                
+                if (iterationTimes < 1) {
+                    break;
+                }
+                
+                if (currentNumber.isFixed()) {
+                    continue;
+                }
+                
+                currentNumber.add(incrementor);
+                iterationTimes -= 1;
+            }
+        }
 
         /**
          * Ordenando os valores resultantes pela ordem original (ordem de
