@@ -2,11 +2,11 @@ package br.com.sogo.commons.largest.remainder;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 /**
  *
  * @author Pedro Arthur <pfernandesvasconcelos@gmail.com>
@@ -75,7 +75,7 @@ public class LargestRemainder {
      * @param decimalPlaces
      * @return 
      */
-    public List<BigDecimal> distributeRemainder(List<Double> percentages, final Integer total, final Integer decimalPlaces) {
+    public List<BigDecimal> distributeRemainder(List<Double> percentages, final Integer total, final Integer decimalPlaces) throws IllegalArgumentException {
         
         final List<BigDecimal> bigPercentages = percentages.stream()
                 .map(BigDecimal::valueOf)
@@ -93,7 +93,7 @@ public class LargestRemainder {
      * @param decimalPlaces
      * @return 
      */
-    public List<BigDecimal> distributeRemainder(List<Double> percentages, final Double total, final Integer decimalPlaces) {
+    public List<BigDecimal> distributeRemainder(List<Double> percentages, final Double total, final Integer decimalPlaces) throws IllegalArgumentException {
         
         final List<BigDecimal> bigPercentages = percentages.stream()
                 .map(BigDecimal::valueOf)
@@ -115,8 +115,20 @@ public class LargestRemainder {
      * @param decimalPlaces
      * @return
      */
-    public List<BigDecimal> distributeRemainder(List<BigDecimal> percentages, final BigDecimal total, final Integer decimalPlaces) {
-
+    public List<BigDecimal> distributeRemainder(List<BigDecimal> percentages, final BigDecimal total, final Integer decimalPlaces) throws IllegalArgumentException {
+        
+        if (decimalPlaces == null || decimalPlaces < 0) {
+            throw new IllegalArgumentException("A casa decimal informada \"decimalPlaces\" nao deve ser nula e deve ser maior > -1. valor passado: " + decimalPlaces);
+        }
+        
+        if (total == null || total.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("A valor total, que representara a soma dos valores percentuais passados \"total\" nao deve ser nula ou menor/igual a zero. valor passado: " + decimalPlaces);
+        }
+        
+        if (percentages == null || percentages.isEmpty()) {
+            return new ArrayList<>();
+        }
+            
         /**
          * quantidade de porcentagens passadas na lista
          */

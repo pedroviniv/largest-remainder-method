@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.Comparator;
 
 /**
+ * class
  *
  * @author Pedro Arthur <pfernandesvasconcelos@gmail.com>
  */
@@ -70,51 +71,51 @@ public class Number {
     }
 
     /**
-         * incrementa um determinado valor ao valor desta instancia de
-         * {@link Number}.
-         *
-         * @param valueToBeIncremented
-         */
-        public void add(BigDecimal valueToBeIncremented) {
-            this.value = this.value.add(valueToBeIncremented);
-        }
+     * incrementa um determinado valor ao valor desta instancia de
+     * {@link Number}.
+     *
+     * @param valueToBeIncremented
+     */
+    public void add(BigDecimal valueToBeIncremented) {
+        this.value = this.value.add(valueToBeIncremented);
+    }
 
-        /**
-         * Recupera um comparator que compara um NumberItem com outro, levando
-         * em consideraçao o peso (weight). Se desc = true, entao o comparator
-         * fara ordenaçao de maneira decrescente. se desc = false, sera de
-         * maneira ascendente.
-         *
-         * @param desc
-         * @return
-         */
-        public static Comparator<Number> getComparatorByWeight(Boolean desc) {
+    /**
+     * Recupera um comparator que compara um NumberItem com outro, levando em
+     * consideraçao o peso (weight). Se desc = true, entao o comparator fara
+     * ordenaçao de maneira decrescente. se desc = false, sera de maneira
+     * ascendente.
+     *
+     * @param desc
+     * @return
+     */
+    public static Comparator<Number> getComparatorByWeight(Boolean desc) {
 
-            if (desc) {
-                return (n1, n2) -> {
-                    return n2.weight.compareTo(n1.weight);
-                };
-            }
-
+        if (desc) {
             return (n1, n2) -> {
-                return n1.weight.compareTo(n2.weight);
+                return n2.weight.compareTo(n1.weight);
             };
         }
 
-        /**
-         * Recupera um comparator que ordena pelo indice
-         * {@link Number#originalOrder}.
-         *
-         * @return
-         */
-        public static Comparator<Number> getComparatorByOriginalOrder() {
-            return (n1, n2) -> {
-                return n1.originalOrder.compareTo(n2.originalOrder);
-            };
-        }
+        return (n1, n2) -> {
+            return n1.weight.compareTo(n2.weight);
+        };
+    }
 
-        @Override
-        public String toString() {
-            return "Number{" + "originalOrder=" + originalOrder + ", value=" + value + ", weight=" + weight + '}';
-        }
+    /**
+     * Recupera um comparator que ordena pelo indice
+     * {@link Number#originalOrder}.
+     *
+     * @return
+     */
+    public static Comparator<Number> getComparatorByOriginalOrder() {
+        return (n1, n2) -> {
+            return n1.originalOrder.compareTo(n2.originalOrder);
+        };
+    }
+
+    @Override
+    public String toString() {
+        return "Number{" + "originalOrder=" + originalOrder + ", value=" + value + ", weight=" + weight + '}';
+    }
 }
