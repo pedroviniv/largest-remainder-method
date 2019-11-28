@@ -6,6 +6,7 @@
 package br.com.sogo.commons.largest.remainder;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Loader {
         
         LargestRemainder largestRemainder = new LargestRemainder();
         
-        List<BigDecimal> result = largestRemainder.distributeRemainder(Arrays.asList(35.10D, 37.90D, 10.15D, 36.50D), 120D, 2, Arrays.asList(0));
+        List<BigDecimal> result = largestRemainder.distributeRemainder(Arrays.asList(26D, 27D, 27D, 26D), 105D, 0, new ArrayList<>());
         
         System.out.println(result);
     }
