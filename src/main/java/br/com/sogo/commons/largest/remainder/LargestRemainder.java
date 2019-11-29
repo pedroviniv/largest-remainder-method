@@ -118,7 +118,7 @@ public class LargestRemainder {
         return this.distributeRemainder(percentages, total, decimalPlaces, new ArrayList<>());
     }
 
-    List<BigDecimal> distributeRemainder(List<BigDecimal> percentages, final BigDecimal total, final Integer decimalPlaces) throws IllegalArgumentException {
+    public List<BigDecimal> distributeRemainder(List<BigDecimal> percentages, final BigDecimal total, final Integer decimalPlaces) throws IllegalArgumentException {
         return this.distributeRemainder(percentages, total, decimalPlaces, new ArrayList<>());
     }
 
