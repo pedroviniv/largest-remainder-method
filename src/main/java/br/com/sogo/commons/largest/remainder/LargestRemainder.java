@@ -141,10 +141,6 @@ public class LargestRemainder {
             throw new IllegalArgumentException("A casa decimal informada \"decimalPlaces\" nao deve ser nula e deve ser maior > -1. valor passado: " + decimalPlaces);
         }
 
-        if (total == null || total.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("A valor total, que representara a soma dos valores percentuais passados \"total\" nao deve ser nula ou menor/igual a zero. valor passado: " + decimalPlaces);
-        }
-
         if (percentages == null || percentages.isEmpty()) {
             return new ArrayList<>();
         }

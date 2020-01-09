@@ -114,18 +114,6 @@ public class LargestRemainderTest {
     }
     
     @Test(expected = java.lang.IllegalArgumentException.class)
-    public void testTotal0() {
-        
-        this.largestRemainder.distributeRemainder(new ArrayList<>(), BigDecimal.ZERO, 0,  new ArrayList<>());
-    }
-    
-    @Test(expected = java.lang.IllegalArgumentException.class)
-    public void testNegativeTotal() {
-        
-        List<BigDecimal> result = this.largestRemainder.distributeRemainder(new ArrayList<>(), big(-1), 0,  new ArrayList<>());
-    }
-    
-    @Test(expected = java.lang.IllegalArgumentException.class)
     public void testNegativeDecimalPlaces() {
         
         List<BigDecimal> result = this.largestRemainder.distributeRemainder(new ArrayList<>(), big(100), -1,  new ArrayList<>());
