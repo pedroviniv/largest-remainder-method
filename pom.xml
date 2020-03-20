@@ -21,8 +21,8 @@
     <distributionManagement>
         <snapshotRepository>
             <id>snapshots</id>
-            <name>c9704db4a331-snapshots</name>
-            <url>http://repo.sogo.com.br/artifactory/libs-snapshot</url>
+            <name>ad0dcd51d678-snapshots</name>
+            <url>http://ec2-18-188-171-248.us-east-2.compute.amazonaws.com:8081/artifactory/libs-snapshot-local</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
