@@ -9,6 +9,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import static java.util.stream.Collectors.toSet;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -59,7 +62,7 @@ public class LargestRemainderTest {
         
         final List<BigDecimal> result = largestRemainder.distributeRemainder(input, 100, 1, new ArrayList<>());
         
-        assertEquals(Arrays.asList(big(12.5), big(25.6), big(12.0), big(15.3), big(24.6), big(10.0)), result);
+        assertEquals(Arrays.asList(big(12.4), big(25.6), big(12.0), big(15.3), big(24.7), big(10.0)), result);
     }
     
     /**
@@ -104,6 +107,22 @@ public class LargestRemainderTest {
         final List<BigDecimal> result = this.largestRemainder.distributeRemainder(input, 120D, 2, Arrays.asList(0));
         
         assertEquals(expected, result);
+    }
+    
+    @Test
+    public void roundTwoArraysInDifferentOrdersButSameValuesShouldHasTheSameResult() {
+        
+        
+        Set<BigDecimal> result1 = this.largestRemainder.distributeRemainder(
+                Arrays.asList(41.5D, 37.5D, 15.08D, 4.75D, 1.17D), 100D, 0, new ArrayList<>()
+        ).stream().collect(Collectors.toSet());
+                
+        
+        Set<BigDecimal> result2 = this.largestRemainder.distributeRemainder(
+                Arrays.asList(15.08D, 37.5D, 41.5D, 4.75D, 1.17D), 100D, 0, new ArrayList<>()
+        ).stream().collect(Collectors.toSet());
+        
+        assertEquals(result1, result2);
     }
     
     @Test

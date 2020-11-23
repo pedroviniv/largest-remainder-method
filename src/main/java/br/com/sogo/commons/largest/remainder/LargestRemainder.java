@@ -174,7 +174,7 @@ public class LargestRemainder {
          */
         final List<Number> numbers = IntStream.range(0, percentageListSize)
                 .mapToObj(toNumberItem(percentages, decimalPlaces, fixedNumbers))
-                .sorted(Number.getComparatorByWeight(desc))
+                .sorted(Number.getComparatorByWeightAndValue(desc))
                 .collect(Collectors.toList());
 
         /**

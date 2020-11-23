@@ -45,7 +45,7 @@ public class Number {
             this.weight = value;
             return this;
         }
-        
+
         public Builder isFixed(final Boolean isFixed) {
             this.fixed = isFixed;
             return this;
@@ -94,6 +94,22 @@ public class Number {
     }
 
     /**
+     * compare two numbers by weight, if it's equal
+     * then the value is compared.
+     * 
+     * @param a
+     * @param b
+     * @return 
+     */
+    private static int compareByWeightAndValue(Number a, Number b) {
+        int weightCompareResult = a.weight.compareTo(b.weight);
+        if (weightCompareResult == 0) {
+            return a.value.compareTo(b.value);
+        }
+        return weightCompareResult;
+    }
+
+    /**
      * Recupera um comparator que compara um NumberItem com outro, levando em
      * consideraçao o peso (weight). Se desc = true, entao o comparator fara
      * ordenaçao de maneira decrescente. se desc = false, sera de maneira
@@ -102,16 +118,16 @@ public class Number {
      * @param desc
      * @return
      */
-    public static Comparator<Number> getComparatorByWeight(Boolean desc) {
+    public static Comparator<Number> getComparatorByWeightAndValue(Boolean desc) {
 
         if (desc) {
             return (n1, n2) -> {
-                return n2.weight.compareTo(n1.weight);
+                return Number.compareByWeightAndValue(n2, n1);
             };
         }
 
         return (n1, n2) -> {
-            return n1.weight.compareTo(n2.weight);
+            return Number.compareByWeightAndValue(n1, n2);
         };
     }
 

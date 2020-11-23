@@ -20,8 +20,16 @@ public class Loader {
         
         LargestRemainder largestRemainder = new LargestRemainder();
         
-        List<BigDecimal> result = largestRemainder.distributeRemainder(Arrays.asList(0.30d, 0d), 0D, 0, new ArrayList<>());
+        List<BigDecimal> result = largestRemainder.distributeRemainder(
+                Arrays.asList(41.5D, 37.5D, 15.08D, 4.75D, 1.17D),
+        100D, 0, new ArrayList<>());
         
         System.out.println(result);
+        
+        List<BigDecimal> result2 = largestRemainder.distributeRemainder(
+                Arrays.asList(15.08D, 37.5D, 41.5D, 4.75D, 1.17D),
+        100D, 0, new ArrayList<>());
+        
+        System.out.println(result2);
     }
 }
